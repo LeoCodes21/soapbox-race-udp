@@ -50,13 +50,11 @@ public class UdpSession {
 					.filter(e -> e.getKey() != senderPersonaId)
 					.collect(Collectors.toList());
             talkerList.forEach(talkerEntry -> {
-            	Integer personaId = talkerEntry.getKey();
+            	int personaId = talkerEntry.getKey();
             	IUdpTalk talker = talkerEntry.getValue();
             	
-            	if (personaId.longValue() != senderPersonaId) {
-            		logger.info("[Freeroam] Sending to " + personaId);
+            	if (senderPersonaId != personaId) {
             		talker.sendFrom(udpTalk, dataPacket);
-            		logger.info("[Freeroam] Sent to " + personaId);
 				}
 			});
 			
