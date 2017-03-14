@@ -25,7 +25,7 @@ public abstract class UdpTalk implements IUdpTalk, Comparable<UdpTalk> {
 	}
 
 	public void sendFrom(IUdpTalk udpTalk, byte[] dataPacket) {
-		byte[] processed = packetProcessor.getProcessed(dataPacket);
+		byte[] processed = packetProcessor.getProcessed(dataPacket, UdpSessions.get(getSessionId()).getTimeDiff());
 		if (processed != null) {
 			udpWriter.sendPacket(processed);
 		}
@@ -33,7 +33,7 @@ public abstract class UdpTalk implements IUdpTalk, Comparable<UdpTalk> {
 
 	protected abstract void parseSyncPacket() throws Exception;
 
-	protected IPacketProcessor getPacketProcessor() {
+	public IPacketProcessor getPacketProcessor() {
 		return packetProcessor;
 	}
 

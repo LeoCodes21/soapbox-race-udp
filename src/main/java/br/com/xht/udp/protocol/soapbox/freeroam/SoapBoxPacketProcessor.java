@@ -27,8 +27,10 @@ public class SoapBoxPacketProcessor implements IPacketProcessor {
 	}
 
 	@Override
-	public byte[] getProcessed(byte[] data) {
+	public byte[] getProcessed(byte[] data, long timeDiff) {
 		byte[] seqArray = ByteBuffer.allocate(2).putShort((short) count).array();
+		byte[] timeArray = ByteBuffer.allocate(2).putShort((short) timeDiff).array();
+		
 		header[0] = seqArray[0];
 		header[1] = seqArray[1];
 		header[7] = seqArray[0];
@@ -36,6 +38,7 @@ public class SoapBoxPacketProcessor implements IPacketProcessor {
 		data = convertPacket(data);
 		int size = header.length + data.length;
 		byte[] dataTmp = new byte[size];
+		
 		for (int i = 0; i < header.length; i++) {
 			dataTmp[i] = header[i];
 		}
@@ -43,6 +46,10 @@ public class SoapBoxPacketProcessor implements IPacketProcessor {
 			int pos = i + header.length;
 			dataTmp[pos] = data[i];
 		}
+
+		dataTmp[3] = timeArray[0];
+		dataTmp[4] = timeArray[1];
+		
 		count++;
 		return dataTmp;
 	}

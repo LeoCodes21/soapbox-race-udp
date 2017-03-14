@@ -21,4 +21,6 @@ public interface IUdpTalk {
 	public IUdpHello getHello();
 	
 	public void updateLastPacket();
+	
+	public IPacketProcessor getPacketProcessor();
 }
