@@ -42,22 +42,24 @@ public class UdpSession {
 	public void broadcast(IUdpTalk udpTalk, byte[] dataPacket) {
 		Set<Entry<Integer, IUdpTalk>> entrySet = udpTalkers.entrySet();
 		long senderPersonaId = udpTalk.getPersonaId();
-		
+
 		pool.submit(() -> {
-		    logger.info("[Freeroam] Sending from persona " + senderPersonaId);
-            List<Entry<Integer, IUdpTalk>> talkerList = Lists.newArrayList(entrySet)
+			logger.info("[Freeroam] Sending from persona " + senderPersonaId);
+			List<Entry<Integer, IUdpTalk>> talkerList = Lists.newArrayList(entrySet)
 					.stream()
 					.filter(e -> e.getKey() != senderPersonaId)
 					.collect(Collectors.toList());
-            talkerList.forEach(talkerEntry -> {
-            	int personaId = talkerEntry.getKey();
-            	IUdpTalk talker = talkerEntry.getValue();
-            	
-            	if (senderPersonaId != personaId) {
-            		talker.sendFrom(udpTalk, dataPacket);
+			talkerList.forEach(talkerEntry -> {
+				Integer personaId = talkerEntry.getKey();
+				IUdpTalk talker = talkerEntry.getValue();
+
+				if (personaId.longValue() != senderPersonaId) {
+					logger.info("[Freeroam] Sending to " + personaId);
+					talker.sendFrom(udpTalk, dataPacket);
+					logger.info("[Freeroam] Sent to " + personaId);
 				}
 			});
-			
+
 			logger.info("[Freeroam] Done sending from persona " + senderPersonaId);
 		});
 	}
