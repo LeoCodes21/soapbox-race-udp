@@ -1,6 +1,7 @@
 package br.com.xht.udp.servers;
 
 import br.com.xht.udp.handler.IUdpProtocol;
+import br.com.xht.udp.handler.UdpDebug;
 import br.com.xht.udp.handler.UdpServer;
 
 public class GenericServer {
@@ -13,7 +14,8 @@ public class GenericServer {
 			port = new Integer(args[0]);
 			protocol = args[1];
 		}
-		// UdpDebug.startDebug();
+		
+//		UdpDebug.startDebug();
 		Class<?> dynamicObj;
 		try {
 			dynamicObj = Class.forName(protocol);

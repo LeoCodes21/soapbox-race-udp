@@ -12,4 +12,13 @@ public interface IUdpTalk {
 
 	public int getSessionId();
 
+	public long getDiffTime();
+	
+	public long getSleepTime();
+	
+	public byte[] getHelloPacket();
+	
+	public IUdpHello getHello();
+	
+	public void updateLastPacket();
 }

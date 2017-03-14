@@ -12,4 +12,5 @@ public interface IUdpHello {
 
 	public byte[] getHelloPacket();
 
+	public byte[] getServerHelloMessage();
 }

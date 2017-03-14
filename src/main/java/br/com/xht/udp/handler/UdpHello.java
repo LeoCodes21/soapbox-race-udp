@@ -34,7 +34,7 @@ public abstract class UdpHello implements IUdpHello {
 
 	protected abstract void setSessionId() throws Exception;
 
-	protected abstract byte[] getServerHelloMessage();
+	public abstract byte[] getServerHelloMessage();
 
 	protected abstract IUdpTalk getUdpTalkInstance(UdpDataPacket dataPacket);
 

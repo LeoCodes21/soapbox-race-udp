@@ -14,3 +14,7 @@ target/
 .tern-project
 /target/
 /udp/
+
+# intellij
+*.iml
+.idea/

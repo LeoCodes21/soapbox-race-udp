@@ -2,6 +2,7 @@ package br.com.xht.udp.protocol.soapbox.freeroam;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import br.com.xht.udp.handler.IUdpTalk;
 import br.com.xht.udp.handler.UdpDataPacket;
@@ -18,13 +19,12 @@ public class SoapBoxHello extends UdpHello {
 		if ((helloPacket[2] != 0x06)) {
 			throw new Exception("invalid hello packet!");
 		}
-		byte[] helloPacketParse = { //
+		helloPacketTmp = new byte[]{ //
 				helloPacket[3], //
 				helloPacket[4], //
 				helloPacket[5], //
 				helloPacket[6]//
 		};
-		helloPacketTmp = helloPacketParse;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class SoapBoxHello extends UdpHello {
 	}
 
 	@Override
-	protected byte[] getServerHelloMessage() {
+	public byte[] getServerHelloMessage() {
 		ByteBuffer byteBuffer = ByteBuffer.allocate(11);
 		byteBuffer.put((byte) 0x00);
 		byteBuffer.put((byte) 0x00);

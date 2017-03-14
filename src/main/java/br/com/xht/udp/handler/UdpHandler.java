@@ -17,6 +17,7 @@ public class UdpHandler {
 		if (udpTalk == null) {
 			udpTalk = this.startTalk(dataPacket);
 		} else {
+			udpTalk.updateLastPacket();
 			udpTalk.broadcast(dataPacket.getDataBytes());
 		}
 	}

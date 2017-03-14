@@ -12,12 +12,13 @@ public abstract class UdpTalk implements IUdpTalk, Comparable<UdpTalk> {
 
 	private long timeStart;
 
-	private long ping;
-
-	protected byte[] syncPacket;
+	private long ping = 0;
+	
+	private long lastPacketSent = 0;
 
 	public UdpTalk(IUdpHello udpHello, IPacketProcessor packetProcessor, UdpWriter udpWriter) {
 		this.timeStart = new Date().getTime();
+		this.lastPacketSent = this.timeStart;
 		this.udpHello = udpHello;
 		this.packetProcessor = packetProcessor;
 		this.udpWriter = udpWriter;
@@ -49,8 +50,12 @@ public abstract class UdpTalk implements IUdpTalk, Comparable<UdpTalk> {
 	}
 
 	public long getDiffTime() {
-		long now = new Date().getTime();
-		return now - timeStart;
+		return new Date().getTime() - timeStart;
+	}
+
+	@Override
+	public long getSleepTime() {
+		return new Date().getTime() - this.lastPacketSent;
 	}
 
 	public void broadcast(byte[] dataPacket) {
@@ -62,8 +67,18 @@ public abstract class UdpTalk implements IUdpTalk, Comparable<UdpTalk> {
 		return ping;
 	}
 
-	protected byte[] getHelloPacket() {
+	public byte[] getHelloPacket() {
 		return udpHello.getHelloPacket();
+	}
+
+	@Override
+	public IUdpHello getHello() {
+		return udpHello;
+	}
+
+	@Override
+	public void updateLastPacket() {
+		this.lastPacketSent = new Date().getTime();
 	}
 
 	public int getPersonaId() {

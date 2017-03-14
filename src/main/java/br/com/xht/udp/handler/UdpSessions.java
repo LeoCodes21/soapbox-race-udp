@@ -16,8 +16,12 @@ public class UdpSessions {
 			put(udpSession);
 			return udpSession;
 		}
-		udpSession.put(udpTalk);
-		System.out.println("returning [" + udpTalk.getSessionId() + "] from UdpSessions with one more UdpTalk");
+		if (!udpSession.has(udpTalk)) {
+			udpSession.put(udpTalk);
+			System.out.println("returning [" + udpTalk.getSessionId() + "] from UdpSessions with one more UdpTalk");
+		} else {
+			System.out.println("ignoring new UdpTalk instance (" + udpTalk.getPersonaId() + ")");
+		}
 		return udpSession;
 	}
 

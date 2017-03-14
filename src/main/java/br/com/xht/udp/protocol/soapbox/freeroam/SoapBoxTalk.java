@@ -17,8 +17,7 @@ public class SoapBoxTalk extends UdpTalk {
 
 	@Override
 	public byte[] getSyncPacket() {
-		byte[] pingSyncPacket = { 0x00 };
-		return pingSyncPacket;
+		return new byte[]{ 0x00 };
 	}
 
 }

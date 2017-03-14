@@ -6,6 +6,7 @@ public class UdpDebug {
 
 	public static void startDebug() {
 		isDebugging = true;
+		System.out.println("debug mode on");
 	}
 
 	public static void stopDebug() {
@@ -57,13 +58,17 @@ public class UdpDebug {
 	}
 
 	private static byte[] hexStringToByteArray(String s) {
-		s = s.replace(":", "");
-		int len = s.length();
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2) {
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+		try {
+			s = s.replace(":", "");
+			int len = s.length();
+			byte[] data = new byte[len / 2];
+			for (int i = 0; i < len; i += 2) {
+				data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
+			}
+			return data;
+		} catch (Exception e) {
+			return s.getBytes();
 		}
-		return data;
 	}
 
 	private static String byteArrayToHexString(byte[] b) {
